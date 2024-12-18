@@ -9,7 +9,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v5exx"]
 shader = ExtResource("2_vwu8g")
 shader_parameter/shade = Color(0.180392, 0.188235, 0.219608, 0)
-shader_parameter/xyangle = 360.0
+shader_parameter/xyangle = 11.612
 shader_parameter/zangle = 45.0
 shader_parameter/debug_show_shadow = true
 shader_parameter/debug_show_height = false
@@ -17,7 +17,7 @@ shader_parameter/debug_show_height = false
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b8vm1"]
 shader = ExtResource("2_vwu8g")
 shader_parameter/shade = Color(0.2, 0.15, 0.15, 0)
-shader_parameter/xyangle = 360.0
+shader_parameter/xyangle = 90.0
 shader_parameter/zangle = 45.0
 shader_parameter/debug_show_shadow = true
 shader_parameter/debug_show_height = false
@@ -45,6 +45,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAA
 tile_set = ExtResource("3_m5my8")
 
 [node name="Map" type="TileMapLayer" parent="BackBufferCopy"]
+visible = false
 material = SubResource("ShaderMaterial_v5exx")
 tile_map_data = PackedByteArray("AAABAP//AAAAAAMAAAADAP3/AAAAAAMAAAD///z/AAAAAAMAAAAAAPz/AAAAAAMAAAA=")
 tile_set = ExtResource("3_m5my8")

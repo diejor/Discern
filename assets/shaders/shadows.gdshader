@@ -4,7 +4,7 @@ uniform vec4 shade : source_color = vec4(0.2, 0.15, 0.15, 0.0);
 uniform float xyangle : hint_range(0.0, 360.) = 45.0;
 uniform float zangle : hint_range(0., 90.) = 30.0;
 
-uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_nearest;
 
 // Debug uniforms
 uniform bool debug_show_shadow = false;
@@ -53,7 +53,7 @@ void fragment() {
 
     for (int i = 1; i <= max_steps; i++) {
         float dist = float(i) * step_size;
-        
+
         vec2 shadow_ray = base_dir - vec2(0.0, sign(zangle_r) * tan(zangle_r));
         vec2 lookup = SCREEN_UV + dist*shadow_ray;
 
