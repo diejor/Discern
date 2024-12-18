@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=4 uid="uid://b3p1xf8dw08yd"]
+
+[ext_resource type="TileSet" uid="uid://q1ule8y12dkl" path="res://assets/heightmap.tres" id="1_pk4yx"]
+[ext_resource type="Shader" path="res://assets/shaders/shadows.gdshader" id="2_vwu8g"]
+[ext_resource type="TileSet" uid="uid://cjiylhm6s3e56" path="res://assets/diffsuse.tres" id="3_m5my8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ci6xe"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v5exx"]
+shader = ExtResource("2_vwu8g")
+shader_parameter/shade = Color(0.180392, 0.188235, 0.219608, 0)
+shader_parameter/xyangle = 360.0
+shader_parameter/zangle = 45.0
+shader_parameter/debug_show_shadow = true
+shader_parameter/debug_show_height = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b8vm1"]
+shader = ExtResource("2_vwu8g")
+shader_parameter/shade = Color(0.2, 0.15, 0.15, 0)
+shader_parameter/xyangle = 360.0
+shader_parameter/zangle = 45.0
+shader_parameter/debug_show_shadow = true
+shader_parameter/debug_show_height = false
+
+[node name="Main" type="Node"]
+
+[node name="FloorHeight" type="TileMapLayer" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_ci6xe")
+tile_map_data = PackedByteArray("AAACAAAAAAAAAAMAAAADAP//AAAAAAMAAAAAAAAAAAAAAAMAAAAFAAIAAAAAAAMAAAACAAEAAAAAAAMAAAACAAIAAAAAAAMAAAADAAIAAAAAAAMAAAADAAEAAAAAAAMAAAABAAEAAAAAAAMAAAABAAIAAAAAAAMAAAABAAMAAAAAAAMAAAAAAAMAAAAAAAMAAAD//wMAAAAAAAMAAAACAAMAAAAAAAMAAAADAAMAAAAAAAMAAAAEAAMAAAAAAAMAAAAFAAMAAAAAAAMAAAAGAAMAAAAAAAMAAAAGAAIAAAAAAAMAAAAGAAEAAAAAAAMAAAAFAAEAAAAAAAMAAAAEAAIAAAAAAAMAAAAEAAEAAAAAAAMAAAAEAAAAAAAAAAMAAAADAAAAAAAAAAMAAAAFAAAAAAAAAAMAAAAFAP//AAAAAAMAAAAGAP//AAAAAAMAAAAGAAAAAAAAAAMAAAAGAP7/AAAAAAMAAAAFAP7/AAAAAAMAAAAEAP7/AAAAAAMAAAADAP7/AAAAAAMAAAAEAP//AAAAAAMAAAD///7/AAAAAAMAAAD/////AAAAAAMAAAD//wAAAAAAAAMAAAD//wEAAAAAAAMAAAAAAAEAAAAAAAMAAAAAAAIAAAAAAAMAAAD//wIAAAAAAAMAAAABAAAAAAAAAAMAAAABAP//AAAAAAMAAAAAAP//AAAAAAMAAAAAAP7/AAAAAAMAAAABAP7/AAAAAAMAAAA=")
+tile_set = ExtResource("1_pk4yx")
+
+[node name="MapHeight" type="TileMapLayer" parent="."]
+material = SubResource("ShaderMaterial_ci6xe")
+position = Vector2(0, -16)
+tile_map_data = PackedByteArray("AAACAAAAAAAAAAMAAAAEAP7/AAAAAAMAAAAAAP3/AAAAAAMAAAABAP3/AAAAAAMAAAA=")
+tile_set = ExtResource("1_pk4yx")
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+copy_mode = 2
+
+[node name="Floor" type="TileMapLayer" parent="BackBufferCopy"]
+visible = false
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAABAAIAAAAAAAAAAAABAAAAAAAAAAAAAAACAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAACAAIAAAAAAAAAAAADAAIAAAAAAAAAAAADAAEAAAAAAAAAAAADAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAEAAEAAAAAAAAAAAAEAAAAAAAAAAAAAAAEAP//AAAAAAAAAAAEAP7/AAAAAAAAAAADAP7/AAAAAAAAAAACAP7/AAAAAAAAAAACAP//AAAAAAAAAAABAP//AAAAAAAAAAABAP7/AAAAAAAAAAAAAP7/AAAAAAAAAAD///7/AAAAAAAAAAD/////AAAAAAAAAAAAAP//AAAAAAAAAAD//wAAAAAAAAAAAAD//wEAAAAAAAAAAAD//wIAAAAAAAAAAAAAAAMAAAAAAAAAAAABAAMAAAAAAAAAAAACAAMAAAAAAAAAAAAEAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAAFAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAADAAMAAAAAAAAAAAD//wMAAAAAAAAAAAAGAAMAAAAAAAAAAAAGAAIAAAAAAAAAAAAGAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAFAAAAAAAAAAAAAAAFAP//AAAAAAAAAAAFAP7/AAAAAAAAAAAGAP//AAAAAAAAAAAGAAAAAAAAAAAAAAAGAP7/AAAAAAAAAAA=")
+tile_set = ExtResource("3_m5my8")
+
+[node name="Map" type="TileMapLayer" parent="BackBufferCopy"]
+material = SubResource("ShaderMaterial_v5exx")
+tile_map_data = PackedByteArray("AAABAP//AAAAAAMAAAADAP3/AAAAAAMAAAD///z/AAAAAAMAAAAAAPz/AAAAAAMAAAA=")
+tile_set = ExtResource("3_m5my8")
+
+[node name="ColorRect" type="ColorRect" parent="BackBufferCopy"]
+material = SubResource("ShaderMaterial_b8vm1")
+offset_left = -200.0
+offset_top = -180.0
+offset_right = 417.0
+offset_bottom = 313.0
+color = Color(0, 0, 0, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
