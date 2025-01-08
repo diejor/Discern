@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=4 uid="uid://bvrc5oqxe2ktm"]
+
+[ext_resource type="TileSet" uid="uid://cjiylhm6s3e56" path="res://assets/diffsuse.tres" id="1_b357s"]
+
+[node name="Test" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+rotation = 3.14159
+tile_map_data = PackedByteArray("AAABAAAAAAAAAAMAAAABAAEAAAAAAAMAAAACAAEAAAAAAAMAAAADAAEAAAAAAAMAAAAEAAEAAAAAAAMAAAAFAAEAAAAAAAMAAAADAAAAAAAAAAMAAAD9////AAAAAAMAAQD9/wAAAAAAAAMAAQD8////AAAAAAMAAQD7////AAAAAAMAAQD7/wAAAAAAAAMAAQD6////AAAAAAMAAQD5////AAAAAAMAAQD4////AAAAAAMAAQA=")
+tile_set = ExtResource("1_b357s")
+x_draw_order_reversed = true

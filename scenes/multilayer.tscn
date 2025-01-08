@@ -1,0 +1,103 @@
+[gd_scene load_steps=14 format=4 uid="uid://bh7ls3wqpxtkx"]
+
+[ext_resource type="Script" path="res://scripts/rele.gd" id="1_a0p17"]
+[ext_resource type="Shader" path="res://assets/shaders/multilayer.gdshader" id="2_xorcy"]
+[ext_resource type="TileSet" uid="uid://q1ule8y12dkl" path="res://assets/heightmap.tres" id="3_1cqf4"]
+[ext_resource type="Script" path="res://scripts/diffuse_layer.gd" id="5_2t1ht"]
+[ext_resource type="TileSet" uid="uid://cjiylhm6s3e56" path="res://assets/diffsuse.tres" id="5_3x5xm"]
+[ext_resource type="Shader" path="res://assets/shaders/main-light.gdshader" id="6_ekjep"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cra1h"]
+shader = ExtResource("2_xorcy")
+shader_parameter/layer_index = null
+shader_parameter/layers = 2
+shader_parameter/height = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fkaxc"]
+shader = ExtResource("2_xorcy")
+shader_parameter/layer_index = 1
+shader_parameter/layers = 2
+shader_parameter/height = 1
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_yfe62"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p8vy5"]
+resource_local_to_scene = true
+shader = ExtResource("6_ekjep")
+shader_parameter/project_viewport = Vector2(256, 224)
+shader_parameter/debug_show_height = false
+shader_parameter/debug_show_uv = false
+shader_parameter/debug_light_dir = false
+shader_parameter/debug_neighbors = false
+shader_parameter/ddebug_normals = false
+shader_parameter/height_texture = SubResource("ViewportTexture_yfe62")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_tbyfk"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_10b2w"]
+resource_local_to_scene = true
+shader = ExtResource("6_ekjep")
+shader_parameter/project_viewport = Vector2(256, 224)
+shader_parameter/debug_show_height = false
+shader_parameter/debug_show_uv = false
+shader_parameter/debug_light_dir = false
+shader_parameter/debug_neighbors = false
+shader_parameter/ddebug_normals = false
+shader_parameter/height_texture = SubResource("ViewportTexture_tbyfk")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_xc72v"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Multilayer" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(256, 224)
+script = ExtResource("1_a0p17")
+
+[node name="ColorRect" type="ColorRect" parent="SubViewport"]
+offset_left = -162.0
+offset_top = -132.0
+offset_right = 163.0
+offset_bottom = 128.0
+color = Color(0, 0, 0, 1)
+
+[node name="Floor" type="TileMapLayer" parent="SubViewport"]
+material = SubResource("ShaderMaterial_cra1h")
+tile_map_data = PackedByteArray("AAACAAEAAAAAAAMAAAACAAAAAAAAAAMAAAABAAAAAAAAAAMAAAAAAAAAAAAAAAMAAAD//wAAAAAAAAMAAAABAAEAAAAAAAMAAAAAAAEAAAAAAAMAAAD//wEAAAAAAAMAAAABAP//AAAAAAMAAAAAAP//AAAAAAMAAAD/////AAAAAAMAAAACAP//AAAAAAMAAAADAAAAAAAAAAMAAAADAAEAAAAAAAMAAAADAAIAAAAAAAMAAAACAAIAAAAAAAMAAAABAAIAAAAAAAMAAAAAAAIAAAAAAAMAAAD//wIAAAAAAAMAAAADAP//AAAAAAMAAAADAP7/AAAAAAMAAAACAP7/AAAAAAMAAAABAP7/AAAAAAMAAAAAAP7/AAAAAAMAAAD///7/AAAAAAMAAAD//wMAAAAAAAMAAAD//wQAAAAAAAMAAAAAAAQAAAAAAAMAAAABAAQAAAAAAAMAAAABAAMAAAAAAAMAAAAAAAMAAAAAAAMAAAACAAMAAAAAAAMAAAADAAMAAAAAAAMAAAADAAQAAAAAAAMAAAAEAAIAAAAAAAMAAAAEAAMAAAAAAAMAAAAEAAEAAAAAAAMAAAAEAAAAAAAAAAMAAAAEAAQAAAAAAAMAAAACAAQAAAAAAAMAAAAEAP//AAAAAAMAAAAEAP7/AAAAAAMAAAA=")
+tile_set = ExtResource("3_1cqf4")
+
+[node name="Map" type="TileMapLayer" parent="SubViewport"]
+material = SubResource("ShaderMaterial_fkaxc")
+position = Vector2(0, -16)
+tile_map_data = PackedByteArray("AAACAAAAAAAAAAMAAAACAP//AAAAAAMAAAABAP//AAAAAAMAAAACAAIAAAAAAAMAAAABAAIAAAAAAAMAAAA=")
+tile_set = ExtResource("3_1cqf4")
+
+[node name="Layers" type="Node2D" parent="."]
+
+[node name="Floor" type="TileMapLayer" parent="Layers"]
+material = SubResource("ShaderMaterial_p8vy5")
+tile_map_data = PackedByteArray("AAADAAIAAAAAAAMAAAADAAEAAAAAAAMAAAADAAAAAAAAAAMAAAADAP//AAAAAAMAAAADAP7/AAAAAAMAAAACAP7/AAAAAAMAAAACAP//AAAAAAMAAAACAAAAAAAAAAMAAAACAAEAAAAAAAMAAAACAAIAAAAAAAMAAAABAAIAAAAAAAMAAAABAAEAAAAAAAMAAAAAAAEAAAAAAAMAAAAAAAAAAAAAAAMAAAAAAP//AAAAAAMAAAABAP//AAAAAAMAAAABAP7/AAAAAAMAAAAAAP7/AAAAAAMAAAAAAAIAAAAAAAMAAAD//wIAAAAAAAMAAAD//wEAAAAAAAMAAAD//wAAAAAAAAMAAAD/////AAAAAAMAAAD///7/AAAAAAMAAAABAAAAAAAAAAMAAAA=")
+tile_set = ExtResource("5_3x5xm")
+script = ExtResource("5_2t1ht")
+
+[node name="Map" type="TileMapLayer" parent="Layers"]
+material = SubResource("ShaderMaterial_10b2w")
+position = Vector2(0, -16)
+tile_map_data = PackedByteArray("AAACAAAAAAAAAAMAAAABAP//AAAAAAMAAAACAP//AAAAAAMAAAABAAIAAAAAAAMAAAACAAIAAAAAAAMAAAAAAAQAAAAAAAMAAAABAAQAAAAAAAMAAAACAAQAAAAAAAMAAAADAAQAAAAAAAMAAAAEAAQAAAAAAAMAAAAEAAMAAAAAAAMAAAADAAUAAAAAAAMAAAACAAUAAAAAAAMAAAABAAUAAAAAAAMAAAAAAAUAAAAAAAMAAAAEAAUAAAAAAAMAAAAFAAUAAAAAAAMAAAAFAAQAAAAAAAMAAAAFAAMAAAAAAAMAAAAFAAIAAAAAAAMAAAAFAAEAAAAAAAMAAAAFAAAAAAAAAAMAAAAFAP//AAAAAAMAAAA=")
+tile_set = ExtResource("5_3x5xm")
+script = ExtResource("5_2t1ht")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 129.0
+offset_top = -112.0
+offset_right = 385.0
+offset_bottom = 112.0
+texture = SubResource("ViewportTexture_xc72v")
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+rotation = 4.44884
+color = Color(1, 1, 1, 0.301961)

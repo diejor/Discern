@@ -9,16 +9,16 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v5exx"]
 shader = ExtResource("2_vwu8g")
 shader_parameter/shade = Color(0.180392, 0.188235, 0.219608, 0)
-shader_parameter/xyangle = 11.612
-shader_parameter/zangle = 45.0
+shader_parameter/xyangle = 137.419
+shader_parameter/zangle = 0.0
 shader_parameter/debug_show_shadow = true
 shader_parameter/debug_show_height = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b8vm1"]
 shader = ExtResource("2_vwu8g")
 shader_parameter/shade = Color(0.2, 0.15, 0.15, 0)
-shader_parameter/xyangle = 90.0
-shader_parameter/zangle = 45.0
+shader_parameter/xyangle = 180.0
+shader_parameter/zangle = 0.0
 shader_parameter/debug_show_shadow = true
 shader_parameter/debug_show_height = false
 
@@ -33,7 +33,7 @@ tile_set = ExtResource("1_pk4yx")
 [node name="MapHeight" type="TileMapLayer" parent="."]
 material = SubResource("ShaderMaterial_ci6xe")
 position = Vector2(0, -16)
-tile_map_data = PackedByteArray("AAACAAAAAAAAAAMAAAAEAP7/AAAAAAMAAAAAAP3/AAAAAAMAAAABAP3/AAAAAAMAAAA=")
+tile_map_data = PackedByteArray("AAAAAP3/AAAAAAMAAAAAAP//AAAAAAMAAAA=")
 tile_set = ExtResource("1_pk4yx")
 
 [node name="BackBufferCopy" type="BackBufferCopy" parent="."]
@@ -52,10 +52,10 @@ tile_set = ExtResource("3_m5my8")
 
 [node name="ColorRect" type="ColorRect" parent="BackBufferCopy"]
 material = SubResource("ShaderMaterial_b8vm1")
-offset_left = -200.0
-offset_top = -180.0
-offset_right = 417.0
-offset_bottom = 313.0
+offset_left = -1504.0
+offset_top = -1226.0
+offset_right = 1217.0
+offset_bottom = 915.0
 color = Color(0, 0, 0, 1)
 
 [node name="Camera2D" type="Camera2D" parent="."]

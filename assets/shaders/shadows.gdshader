@@ -57,18 +57,12 @@ void fragment() {
         vec2 shadow_ray = base_dir - vec2(0.0, sign(zangle_r) * tan(zangle_r));
         vec2 lookup = SCREEN_UV + dist*shadow_ray;
 
-        // Check if the lookup position is within the valid range
-        //if (in_range( dist*shadow_ray + UV)) {
-            //// Optionally, you can break the loop if the lookup is out of bounds
-            //continue;
-        //}
-
         // Sample height at lookup position from SCREEN_TEXTURE
         float lookupheight = texture(SCREEN_TEXTURE, lookup).r;
         float traceheight  = height + dist * sin(zangle_r);
 
         // Shadow detection
-        if (lookupheight > traceheight) {
+        if (lookupheight - traceheight > 0.05) {
             isinshade = true;
             break;
         }

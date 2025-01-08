@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=3 uid="uid://boshfkryy5e0h"]
+
+[ext_resource type="TileSet" uid="uid://q1ule8y12dkl" path="res://assets/heightmap.tres" id="1_rr3cd"]
+[ext_resource type="Shader" path="res://assets/shaders/spaces.gdshader" id="2_g3f3q"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cuhmt"]
+shader = ExtResource("2_g3f3q")
+shader_parameter/debug_show_height = false
+shader_parameter/debug_show_uv = false
+
+[sub_resource type="Gradient" id="Gradient_q1p3w"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_auofg"]
+gradient = SubResource("Gradient_q1p3w")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Lighting" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray(0, 0, 3, 0, 2, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 1, 0, 0, 0, 0, 0, 3, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 3, 0, 0, 0)
+tile_set = ExtResource("1_rr3cd")
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+position = Vector2(74.5, 39)
+scale = Vector2(5.345, 4.57)
+copy_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="BackBufferCopy"]
+material = SubResource("ShaderMaterial_cuhmt")
+offset_left = -83.0
+offset_top = -30.0
+offset_right = 56.0
+offset_bottom = 110.0
+color = Color(0, 0, 0, 1)
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+rotation = 1.5708
+target_position = Vector2(0, 30)
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="RayCast2D"]
+color = Color(0.334856, 0.0483, 4.81308e-08, 1)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+position = Vector2(19, 78)
+color = Color(0.310617, 0.310617, 0.310617, 1)
+texture = SubResource("GradientTexture2D_auofg")
+texture_scale = 10.0

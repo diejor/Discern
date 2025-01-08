@@ -11,9 +11,17 @@ config_version=5
 [application]
 
 config/name="Discern"
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="res://scenes/viewports.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=256
+window/size/viewport_height=224
+window/size/mode=3
+window/size/resizable=false
+window/stretch/mode="viewport"
 
 [rendering]
 
