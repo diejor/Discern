@@ -6,6 +6,7 @@ uniform vec2 project_viewport;
 uniform bool debug_show_height = false;
 uniform bool debug_show_uv = false;
 uniform bool debug_light_dir = false;
+uniform bool debug_light_pos = false;
 uniform bool debug_neighbors = false;
 uniform bool ddebug_normals = false;
 
@@ -16,6 +17,7 @@ varying vec2 viewport_uv;
 varying flat vec2 viewport_pixel_size;
 varying flat vec2 texture_size;
 varying vec2 local_uv;
+varying flat mat4 INV_CANVAS_MATRIX;
 
 varying flat vec4 local_color;
 varying flat vec3 normal;
@@ -42,6 +44,7 @@ void vertex() {
 	vec2 world_pos = (MODEL_MATRIX * vec4(VERTEX, 0., 1.)).xy;
 	viewport_uv = (world_pos + project_viewport / 2.) / project_viewport;
 	viewport_pixel_size = 1. / project_viewport;
+	INV_CANVAS_MATRIX = inverse(CANVAS_MATRIX);
 }
 
 void fragment() {
@@ -73,8 +76,11 @@ void fragment() {
 }
 
 void light() {
-    vec4 height = texture(height_texture, viewport_uv);
+	vec2 viewport_uv_px = floor((viewport_uv * project_viewport) + vec2(0., 1.   )) / project_viewport;
+    vec4 height = texture(height_texture, viewport_uv_px);
 	vec2 shadow_ray = LIGHT_DIRECTION.xy - vec2(0., abs(LIGHT_DIRECTION.z));
+	vec2 light_pos_world = (INV_CANVAS_MATRIX * vec4(LIGHT_POSITION, 1.0)).xy;
+	vec2 light_pos_uv = (light_pos_world + project_viewport / 2.) / project_viewport;
 
 	float step_size = length(viewport_pixel_size);
 
@@ -84,7 +90,9 @@ void light() {
 	int max_steps = 30;
     for (int i = 1; i <= max_steps; i++) {
         float dist = float(i) * step_size;
-        vec2 lookup = viewport_uv + dist * shadow_ray;
+        vec2 lookup = viewport_uv_px + round(dist * shadow_ray * project_viewport + vec2(0., 2.   )) / project_viewport;
+		if (distance(lookup, light_pos_uv) < 0.01)
+			break;
 
 		float traceheight = height.r + LIGHT_DIRECTION.z*float(i)*viewport_pixel_size.y;
         vec4 lookupheight = texture(height_texture, lookup);
@@ -93,7 +101,7 @@ void light() {
 			//continue;
 
 
-		if (lookupheight.r - traceheight > 0.01
+		if (lookupheight.r - traceheight > 0.000001
 		) {
             isinshade = true;
             break;
@@ -113,5 +121,9 @@ void light() {
 
 	if (debug_light_dir) {
 		LIGHT = vec4(LIGHT_DIRECTION, 1.);
+	}
+
+	if (debug_light_pos) {
+		LIGHT = vec4(light_pos_uv, 0., 1.);
 	}
 }

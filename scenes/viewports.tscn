@@ -166,7 +166,8 @@ offset_bottom = 107.0
 texture = SubResource("ViewportTexture_uibli")
 
 [node name="DirectionalLight2D2" type="DirectionalLight2D" parent="."]
-rotation = 1.22173
+rotation = 1.5516
+scale = Vector2(1e-05, 1e-05)
 color = Color(0.849143, 0.0976946, 1, 1)
 
 [node name="PointLight2D" type="PointLight2D" parent="."]

@@ -90,30 +90,37 @@ void fragment() {
 }
 
 void light() {
-    vec4 height = texture(height_texture, viewport_uv);
+	vec2 viewport_uv_px = floor((viewport_uv * project_viewport) + vec2(1., 0.)) / project_viewport;
+    vec4 height = texture(height_texture, viewport_uv_px);
 	vec2 shadow_ray = LIGHT_DIRECTION.xy - vec2(0., abs(LIGHT_DIRECTION.z));
 
-	float step_size = dot(
-		abs(shadow_ray),
-		viewport_pixel_size
-	);
+	//float step_size = dot(
+		//abs(shadow_ray),
+		//viewport_pixel_size
+	//);
 
-	//float step_size = length(TEXTURE_PIXEL_SIZE);
+	float step_size = length(viewport_pixel_size);
 
 	bool isinshade = false;
 	int max_steps = 100;
     for (int i = 1; i <= max_steps; i++) {
         float dist = float(i) * step_size;
-        vec2 lookup = viewport_uv + dist * shadow_ray;
+        vec2 lookup = viewport_uv_px + round(dist * shadow_ray * project_viewport) / project_viewport;
 
 		float traceheight = height.r + LIGHT_DIRECTION.z*float(i)*viewport_pixel_size.y;
         vec4 lookupheight = texture(height_texture, lookup);
 
-		if (lookupheight.r - traceheight > 0.05
-		) {
+		vec4 neighbor_col = texture(neighbor_texture_front, lookup);
+		if (local_color_front == neighbor_col)
+			continue;
+
+		if (abs(lookupheight.r - traceheight) < 0.1) {
             isinshade = true;
             break;
-        }
+        } else if (abs(lookupheight.g - traceheight) < 0.1) {
+			isinshade = true;
+			break;
+		}
     }
 
     if (isinshade) {
